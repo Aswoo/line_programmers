@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">memoApp</string>
+    <string name="title_hint">제목을 입력하세요</string>
+    <string name="description_hint">본문을 입력하세요</string>
 </resources>

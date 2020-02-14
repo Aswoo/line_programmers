@@ -8,6 +8,9 @@
         android:id="@+id/memosFragment"
         android:name="com.test.memoapp.ui.memos.MemosFragment"
         android:label="MemosFragment" >
+        <argument
+            android:name="memoId"
+            app:argType="string" />
         <action
             android:id="@+id/action_memosFragment_to_addEditMemoFragment"
             app:destination="@id/addEditMemoFragment" />

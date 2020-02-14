@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/memosFragment">
+
+    <fragment
+        android:id="@+id/memosFragment"
+        android:name="com.test.memoapp.ui.memos.MemosFragment"
+        android:label="MemosFragment" >
+        <action
+            android:id="@+id/action_memosFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+        <action
+            android:id="@+id/action_memosFragment_to_memoDetailFragment"
+            app:destination="@id/memoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditMemoFragment"
+        android:name="com.test.memoapp.ui.addeditmemo.AddEditMemoFragment"
+        android:label="AddEditMemoFragment" />
+    <fragment
+        android:id="@+id/memoDetailFragment"
+        android:name="com.test.memoapp.ui.memodetail.MemoDetailFragment"
+        android:label="MemoDetailFragment" />
+</navigation>

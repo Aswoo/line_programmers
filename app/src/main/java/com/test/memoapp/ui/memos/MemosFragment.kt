@@ -6,14 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.test.memoapp.R
 import com.test.memoapp.databinding.MemosFragBinding
 import kotlinx.android.synthetic.main.memos_frag.*
+import javax.inject.Inject
 
 class MemosFragment : Fragment(){
 
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MemosViewModel> { viewModelFactory }
+
+    private val args: MemosFragmentArgs by navArgs()
+
+    private lateinit var listAdapter: MemosAdapter
 
     lateinit var binding : MemosFragBinding
 
@@ -35,8 +48,21 @@ class MemosFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+
+        setupListAdapter()
+
         fab_add_memo.setOnClickListener {
-            //findNavController().navigate
+            findNavController().navigate(R.id.action_memosFragment_to_addEditMemoFragment)
+        }
+    }
+
+    private fun setupListAdapter() {
+        val viewModel = binding.viewmodel
+        if (viewModel != null) {
+            listAdapter = MemosAdapter(viewModel)
+            binding.memosList.adapter = listAdapter
+        } else {
+            //Timber.w("ViewModel not initialized when attempting to set up adapter.")
         }
     }
 }

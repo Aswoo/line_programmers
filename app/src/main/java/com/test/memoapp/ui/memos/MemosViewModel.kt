@@ -6,10 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.test.Event
+import com.test.memoapp.Event
 import com.test.memoapp.data.Memo
+import com.test.memoapp.data.source.MemosRepository
+import javax.inject.Inject
 
-class MemosViewModel : ViewModel(){
+class MemosViewModel @Inject constructor(private val repository: MemosRepository) :ViewModel(){
+
     private val _items = MutableLiveData<List<Memo>>().apply { value = emptyList() }
     val items: LiveData<List<Memo>> = _items
 
@@ -80,17 +83,6 @@ class MemosViewModel : ViewModel(){
      */
     fun openTask(taskId: String) {
         _openTaskEvent.value = Event(taskId)
-    }
-
-    fun showEditResultMessage(result: Int) {
-        when (result) {
-            /*
-            EDIT_RESULT_OK -> showSnackbarMessage(R.string.successfully_saved_task_message)
-            ADD_EDIT_RESULT_OK -> showSnackbarMessage(R.string.successfully_added_task_message)
-            DELETE_RESULT_OK -> showSnackbarMessage(R.string.successfully_deleted_task_message)
-
-             */
-        }
     }
 
     private fun showSnackbarMessage(message: Int) {

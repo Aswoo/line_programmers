@@ -2,4 +2,11 @@
     <string name="app_name">memoApp</string>
     <string name="title_hint">제목을 입력하세요</string>
     <string name="description_hint">본문을 입력하세요</string>
+    <string name="empty_memo_message">모든 내용을 채워주세요</string>
+    <string name="create_memo_message">메모를 저장을 완료했습니다</string>
+    <string name="error_memo_message">메모 저장에 실패했습니다</string>
+
+    <string name="attach_image_local">로컬 저장소에서 불러오기</string>
+    <string name="attach_image_camera">카매라로 새로 촬영하기</string>
+    <string name="attach_iamge_url">외부 이미지 주소(URL)로 불러오기</string>
 </resources>

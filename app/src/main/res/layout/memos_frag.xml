@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.test.memoapp.ui.memos.MemosViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
+            app:items="@{viewmodel.items}"
             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
 

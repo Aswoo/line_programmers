@@ -31,22 +31,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:enabled="@{viewmodel.dataLoading}"
-            app:refreshing="@{viewmodel.dataLoading}">
 
             <ScrollView
+                android:id="@+id/scroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE}">
+                    android:orientation="vertical">
+                    
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                        ></androidx.recyclerview.widget.RecyclerView>
 
                     <EditText
                         android:id="@+id/add_task_title"
@@ -72,7 +73,6 @@
 
                 </LinearLayout>
             </ScrollView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_save_task"
@@ -81,7 +81,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_done"
             app:fabSize="normal"
-            app:layout_anchor="@id/refresh_layout"
+            app:layout_anchor="@id/scroll"
             app:layout_anchorGravity="bottom|right|end" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

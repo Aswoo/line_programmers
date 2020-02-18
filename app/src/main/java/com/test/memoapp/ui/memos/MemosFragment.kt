@@ -12,11 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.test.memoapp.R
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.memoapp.databinding.MemosFragBinding
+import com.test.memoapp.di.Injectable
 import kotlinx.android.synthetic.main.memos_frag.*
 import javax.inject.Inject
 
-class MemosFragment : Fragment(){
+class MemosFragment : Fragment(), Injectable {
 
 
     @Inject
@@ -28,7 +31,7 @@ class MemosFragment : Fragment(){
 
     private lateinit var listAdapter: MemosAdapter
 
-    lateinit var binding : MemosFragBinding
+    lateinit var binding: MemosFragBinding
 
 
     override fun onCreateView(
@@ -48,21 +51,29 @@ class MemosFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding.lifecycleOwner = viewLifecycleOwner
+        initRecyclerView()
 
-        setupListAdapter()
+        val mvAdapter = MemosAdapter(){
+            memo -> findNavController().navigate(R.id.action_memosFragment_to_memoDetailFragment)
+        }
+
+        binding.memosList.adapter = mvAdapter
+        listAdapter = mvAdapter
 
         fab_add_memo.setOnClickListener {
             findNavController().navigate(R.id.action_memosFragment_to_addEditMemoFragment)
         }
+
+
     }
 
-    private fun setupListAdapter() {
-        val viewModel = binding.viewmodel
-        if (viewModel != null) {
-            listAdapter = MemosAdapter(viewModel)
-            binding.memosList.adapter = listAdapter
-        } else {
-            //Timber.w("ViewModel not initialized when attempting to set up adapter.")
-        }
+    private fun initRecyclerView() {
+
+        binding.viewmodel = viewModel
+        binding.memosList.layoutManager = LinearLayoutManager(context)
+        viewModel.items.observe(viewLifecycleOwner, Observer { result ->
+            listAdapter.submitList(result)
+        })
     }
 }

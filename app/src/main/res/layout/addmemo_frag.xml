@@ -50,7 +50,7 @@
                         ></androidx.recyclerview.widget.RecyclerView>
 
                     <EditText
-                        android:id="@+id/add_task_title"
+                        android:id="@+id/add_memo_title"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <EditText
-                        android:id="@+id/add_task_description"
+                        android:id="@+id/add_memo_description"
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
@@ -75,7 +75,7 @@
             </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_save_task"
+            android:id="@+id/fab_save_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

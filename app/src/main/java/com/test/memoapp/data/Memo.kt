@@ -10,11 +10,9 @@ import java.util.*
 data class Memo @JvmOverloads constructor(
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "description") var description: String = "",
-    @ColumnInfo(name = "image") var image: Array<String> = arrayOf(),
     @PrimaryKey @ColumnInfo(name = "entryid") var id: String = UUID.randomUUID().toString()
 ) {
 
     val isEmpty
         get() = title.isEmpty() || description.isEmpty()
-
 }

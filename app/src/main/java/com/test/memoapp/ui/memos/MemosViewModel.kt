@@ -1,5 +1,6 @@
 package com.test.memoapp.ui.memos
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
@@ -7,11 +8,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.test.memoapp.Event
+import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.data.source.MemosRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MemosViewModel @Inject constructor(private val repository: MemosRepository) :ViewModel(){
+class MemosViewModel @Inject constructor(private val repository: MemosRepository) : ViewModel() {
 
     private val _items = MutableLiveData<List<Memo>>().apply { value = emptyList() }
     val items: LiveData<List<Memo>> = _items
@@ -48,9 +53,11 @@ class MemosViewModel @Inject constructor(private val repository: MemosRepository
         it.isEmpty()
     }
 
+    protected val compositeDisposable = CompositeDisposable()
+
+
     init {
-        // Set initial state
-        //loadTasks(true)
+        loadMemos()
     }
 
     /**
@@ -89,4 +96,29 @@ class MemosViewModel @Inject constructor(private val repository: MemosRepository
         _snackbarText.value = Event(message)
     }
 
+    fun loadMemos() {
+        _dataLoading.value = true
+
+        compositeDisposable.add(
+            repository.getTasks().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isDataLoadingError.value = false
+                    _dataLoading.value = false
+                    _items.value = it
+                },
+                    { error ->
+                        Log.e("TAG", "Unable to get memos", error)
+                        isDataLoadingError.value = false
+                        _dataLoading.value = false
+                        _items.value = emptyList()
+                    })
+        )
+    }
+
+    override fun onCleared() {
+        compositeDisposable.dispose()
+        compositeDisposable.clear()
+        super.onCleared()
+    }
 }

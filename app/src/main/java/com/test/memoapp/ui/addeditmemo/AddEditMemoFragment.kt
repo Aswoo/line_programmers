@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.test.memoapp.R
+import com.test.memoapp.data.Memo
 import com.test.memoapp.databinding.AddmemoFragBinding
 import com.test.memoapp.di.Injectable
 import com.test.memoapp.util.setupSnackbar
+import kotlinx.android.synthetic.main.addmemo_frag.*
 import javax.inject.Inject
 
 class AddEditMemoFragment : Fragment(),Injectable{
@@ -38,6 +38,17 @@ class AddEditMemoFragment : Fragment(),Injectable{
         // Set the lifecycle owner to the lifecycle of the view
         viewDataBinding.lifecycleOwner = this.viewLifecycleOwner
         return viewDataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fab_save_memo.setOnClickListener {
+
+            val title = add_memo_title.text.toString()
+            val description = add_memo_description.text.toString()
+            //val images = viewModel.imagePathList.value
+            viewModel.saveMemo(Memo(title,description))
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

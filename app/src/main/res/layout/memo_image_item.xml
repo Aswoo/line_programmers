@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="memo"
-            type="com.test.memoapp.data.Memo" />
+            name="url"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
             android:id="@+id/ig_memo_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bind_url=""
+            app:bind_url="@{url}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

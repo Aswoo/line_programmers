@@ -9,23 +9,23 @@ import javax.inject.Inject
 
 class DefaultMemosRepository @Inject constructor(private val memosDao: MemosDao) : MemosRepository {
 
-    override fun getTasks(forceUpdate: Boolean): Single<List<Memo>> {
+    override fun getMemos(forceUpdate: Boolean): Single<List<Memo>> {
         return memosDao.getTasks()
     }
 
-    override fun getTask(memoId: String, forceUpdate: Boolean): Single<Memo> {
+    override fun getMemo(memoId: String, forceUpdate: Boolean): Single<Memo> {
         return memosDao.getMemoById(memoId)
     }
 
-    override fun saveTask(memo: Memo): Completable {
+    override fun saveMemo(memo: Memo): Completable {
         return memosDao.insertMemo(memo)
     }
 
-    override fun deleteAllTasks() {
+    override fun deleteAllMemos() {
         return memosDao.deleteMemos()
     }
 
-    override fun deleteTask(memoId: String) : Completable{
+    override fun deleteMemo(memoId: String) : Completable{
         return memosDao.deleteTaskById(memoId)
     }
 

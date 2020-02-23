@@ -9,4 +9,10 @@
     <string name="attach_image_local">로컬 저장소에서 불러오기</string>
     <string name="attach_image_camera">카매라로 새로 촬영하기</string>
     <string name="attach_iamge_url">외부 이미지 주소(URL)로 불러오기</string>
+
+    <string name="menu_delete_memo">삭제</string>
+    <string name="menu_attach_image">첨부</string>
+
+    <string name="txt_gallery">갤러리</string>
+    <string name="txt_done">완료</string>
 </resources>

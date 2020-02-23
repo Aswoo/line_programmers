@@ -35,7 +35,7 @@
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            app:srcCompat="@drawable/baseline_edit_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

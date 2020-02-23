@@ -1,6 +1,7 @@
 package com.test.memoapp.ui.addeditmemo
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,8 @@ import com.test.memoapp.Event
 import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.data.source.MemosRepository
+import com.test.memoapp.ui.gallery.model.GalleryPicture
+import com.test.memoapp.ui.gallery.model.GalleryPictures
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +32,16 @@ class AddEditMemoViewModel @Inject constructor(private val repository: MemosRepo
     val snackbarMessage: LiveData<Event<Int>> = _snackbarText
 
     private val _imagePathList = MutableLiveData<MutableList<String>>()
-    val imagePathList : LiveData<MutableList<String>> = _imagePathList
+    val imagePathList: LiveData<MutableList<String>> = _imagePathList
+
+    val items : ArrayList<String> = ArrayList()
+
+    private var memoId: String? = null
+
+    private var isNewMemo: Boolean = false
+
+    private var isDataLoaded = false
+
 
     protected val compositeDisposable = CompositeDisposable()
 
@@ -37,27 +49,88 @@ class AddEditMemoViewModel @Inject constructor(private val repository: MemosRepo
 
         val currentTitle = title.value
         val currentDescription = description.value
-        val currentImagePathList = imagePathList.value
+        val currentImagePathList = imagePathList.value!!.toList()
+
+        memo.images = currentImagePathList
 
         if (currentTitle == null || currentDescription == null) {
             _snackbarText.value =
                 Event(R.string.empty_memo_message)
             return
         }
-        if (Memo(currentTitle, currentDescription).isEmpty) {
+        if (Memo(currentTitle, currentDescription,currentImagePathList).isEmpty) {
             _snackbarText.value =
                 Event(R.string.empty_memo_message)
             return
         }
 
-        compositeDisposable.add(repository.saveTask(memo).subscribeOn(Schedulers.io())
+        compositeDisposable.add(repository.saveMemo(memo).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _snackbarText.value =
-                Event(R.string.create_memo_message)
+            .subscribe {
+                _snackbarText.value =
+                    Event(R.string.create_memo_message)
             })
     }
 
-    fun addImagePath(uri : Uri?){
-        _imagePathList.value?.add(uri.toString())
+
+    fun addImagePath(images: Array<GalleryPicture>) {
+        val list : MutableList<String> = mutableListOf()
+        images.forEach {
+            list.add(it.path)
+        }
+        _imagePathList.value = list
+    }
+
+    fun removeImagePath(position: Int) {
+        _imagePathList.value?.removeAt(position)
+        _imagePathList.value = _imagePathList.value
+    }
+
+    fun start(memoId: String?) {
+        if (_dataLoading.value == true) {
+            return
+        }
+
+        this.memoId = memoId
+        if (memoId == null) {
+            // No need to populate, it's a new task
+            isNewMemo = true
+            return
+        }
+        if (isDataLoaded) {
+            // No need to populate, already have data.
+            return
+        }
+
+        isNewMemo = false
+        _dataLoading.value = true
+
+        compositeDisposable.add(
+            repository.getMemo(memoId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _dataLoading.value = false
+                    onMemoLoaded(it)
+                },
+                    { error ->
+                        Log.e("TAG", "Unable to get memo", error)
+                        _dataLoading.value = false
+                        onMemoLoaded(Memo())
+                    })
+        )
+    }
+
+    private fun onMemoLoaded(memo: Memo) {
+        title.value = memo.title
+        description.value = memo.description
+        _imagePathList.value = memo.images.toMutableList()
+        _dataLoading.value = false
+        isDataLoaded = true
+    }
+
+    override fun onCleared() {
+        compositeDisposable.dispose()
+        compositeDisposable.clear()
+        super.onCleared()
     }
 }

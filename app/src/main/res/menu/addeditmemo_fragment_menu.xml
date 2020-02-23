@@ -1,16 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_filter"
+        android:id="@+id/menu_attach"
         android:title="@string/attach_image_local"
-        android:icon="@drawable/ic_filter_list"
+        android:icon="@drawable/baseline_attachment_24"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_clear"
-        android:title="@string/attach_image_camera"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_refresh"
-        android:title="@string/attach_iamge_url"
-        app:showAsAction="never" />
+        android:icon="@drawable/baseline_delete_24"
+        android:title="@string/menu_delete_memo"
+        app:showAsAction="always" />
 </menu>

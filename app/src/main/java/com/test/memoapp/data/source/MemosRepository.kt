@@ -26,13 +26,13 @@ import io.reactivex.Single
  */
 interface MemosRepository {
 
-     fun getTasks(forceUpdate: Boolean = false): Single<List<Memo>>
+     fun getMemos(forceUpdate: Boolean = false): Single<List<Memo>>
 
-     fun getTask(taskId: String, forceUpdate: Boolean = false): Single<Memo>
+     fun getMemo(taskId: String, forceUpdate: Boolean = false): Single<Memo>
 
-     fun saveTask(memo: Memo) : Completable
+     fun saveMemo(memo: Memo) : Completable
 
-     fun deleteAllTasks()
+     fun deleteAllMemos()
 
-     fun deleteTask(memoId: String) : Completable
+     fun deleteMemo(memoId: String) : Completable
 }

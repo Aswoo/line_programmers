@@ -100,7 +100,7 @@ class MemosViewModel @Inject constructor(private val repository: MemosRepository
         _dataLoading.value = true
 
         compositeDisposable.add(
-            repository.getTasks().subscribeOn(Schedulers.io())
+            repository.getMemos().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     isDataLoadingError.value = false

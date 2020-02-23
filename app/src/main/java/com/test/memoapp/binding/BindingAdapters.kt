@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.ui.memos.MemosAdapter
 
@@ -52,6 +53,7 @@ object BindingAdapters {
 
         Glide.with(view.context)
             .load(url)
+            .placeholder(R.drawable.baseline_attachment_24)
             .apply(myOptions)
             .into(view)
     }

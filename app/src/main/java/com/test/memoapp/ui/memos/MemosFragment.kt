@@ -29,7 +29,7 @@ class MemosFragment : Fragment(), Injectable {
 
     private val args: MemosFragmentArgs by navArgs()
 
-    private lateinit var listAdapter: MemosAdapter
+    private lateinit var adapter: MemosAdapter
 
     lateinit var binding: MemosFragBinding
 
@@ -54,17 +54,19 @@ class MemosFragment : Fragment(), Injectable {
         binding.lifecycleOwner = viewLifecycleOwner
         initRecyclerView()
 
-        val mvAdapter = MemosAdapter(){
-            memo -> findNavController().navigate(R.id.action_memosFragment_to_memoDetailFragment)
+        val rvAdapter = MemosAdapter{
+            memo ->
+            val action = MemosFragmentDirections.actionMemosFragmentToMemoDetailFragment(memo.id)
+            findNavController().navigate(action)
         }
-
-        binding.memosList.adapter = mvAdapter
-        listAdapter = mvAdapter
+        this.adapter = rvAdapter
+        binding.memosList.adapter = rvAdapter
 
         fab_add_memo.setOnClickListener {
-            findNavController().navigate(R.id.action_memosFragment_to_addEditMemoFragment)
-        }
 
+            val action = MemosFragmentDirections.actionMemosFragmentToAddEditMemoFragment(null,null)
+            findNavController().navigate(action)
+        }
 
     }
 
@@ -73,7 +75,7 @@ class MemosFragment : Fragment(), Injectable {
         binding.viewmodel = viewModel
         binding.memosList.layoutManager = LinearLayoutManager(context)
         viewModel.items.observe(viewLifecycleOwner, Observer { result ->
-            listAdapter.submitList(result)
+            adapter.submitList(result)
         })
     }
 }

@@ -17,6 +17,7 @@
 package com.test.memoapp.di
 
 import com.test.memoapp.ui.addeditmemo.AddEditMemoFragment
+import com.test.memoapp.ui.gallery.CustomGalleryFragment
 import com.test.memoapp.ui.memodetail.MemoDetailFragment
 import com.test.memoapp.ui.memos.MemosFragment
 
@@ -34,4 +35,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMemoDetailFragment(): MemoDetailFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCustomGalleryFragment(): CustomGalleryFragment
 }

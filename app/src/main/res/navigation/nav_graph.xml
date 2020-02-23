@@ -10,7 +10,9 @@
         android:label="MemosFragment" >
         <argument
             android:name="memoId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
         <action
             android:id="@+id/action_memosFragment_to_addEditMemoFragment"
             app:destination="@id/addEditMemoFragment" />
@@ -21,9 +23,73 @@
     <fragment
         android:id="@+id/addEditMemoFragment"
         android:name="com.test.memoapp.ui.addeditmemo.AddEditMemoFragment"
-        android:label="AddEditMemoFragment" />
+        android:label="AddEditMemoFragment" >
+
+        <argument
+            android:name="images"
+            app:argType="com.test.memoapp.ui.gallery.model.GalleryPicture[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="memoId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+        <action
+            android:id="@+id/action_addEditMemoFragment_to_actionBottomSheetFragment"
+            app:destination="@id/actionBottomSheetFragment" />
+    </fragment>
     <fragment
         android:id="@+id/memoDetailFragment"
         android:name="com.test.memoapp.ui.memodetail.MemoDetailFragment"
-        android:label="MemoDetailFragment" />
+        android:label="MemoDetailFragment" >
+
+        <argument
+            android:name="memoId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_memoDetailFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/actionBottomSheetFragment"
+        android:name="com.test.memoapp.util.ActionBottomSheetFragment"
+        android:label="ActionBottomSheetFragment" >
+
+        <argument
+            android:name="memoId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_customGalleryFragment"
+            app:destination="@id/customGalleryFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/customGalleryFragment"
+        android:name="com.test.memoapp.ui.gallery.CustomGalleryFragment"
+        android:label="CustomGalleryFragment" >
+
+        <argument
+            android:name="memoId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+        <action
+            android:id="@+id/action_customGalleryFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment"
+            app:popUpTo="@+id/addEditMemoFragment"
+            app:popUpToInclusive="true">
+        </action>
+    </fragment>
 </navigation>

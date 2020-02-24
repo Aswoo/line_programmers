@@ -32,7 +32,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.LayoutInflater
+import android.view.TextureView
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -48,13 +51,10 @@ import com.test.memoapp.MainActivity
 import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.util.AutoFitPreviewBuilder
-import kotlinx.android.synthetic.main.fragment_multi_gallery_ui.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
 import java.util.concurrent.Executor
-import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -158,7 +158,7 @@ class CameraFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCall
 
             val mutableList : MutableList<String> = mutableListOf()
 
-            memo.images?.forEach{
+            memo.images.forEach{
                 mutableList.add(it)
             }
             mutableList.add(photoFile.absolutePath)

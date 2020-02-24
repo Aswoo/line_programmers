@@ -11,17 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.test.memoapp.MainActivity
 import com.test.memoapp.R
 import com.test.memoapp.data.Memo
-import com.test.memoapp.ui.camera.CameraFragment
 import kotlinx.android.synthetic.main.remote_url_frag.*
 import java.io.File
 import java.io.FileOutputStream
@@ -37,7 +31,7 @@ class RemoteUrlFragment : Fragment() {
     private lateinit var outputDirectory: File
 
     val imageUrl =
-        "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory&fname=https://k.kakaocdn.net/dn/EShJF/btquPLT192D/SRxSvXqcWjHRTju3kHcOQK/img.png";
+        "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory&fname=https://k.kakaocdn.net/dn/EShJF/btquPLT192D/SRxSvXqcWjHRTju3kHcOQK/img.png"
 
 
     override fun onCreateView(
@@ -83,7 +77,7 @@ class RemoteUrlFragment : Fragment() {
                 FILENAME,
                 PHOTO_EXTENSION
             )
-            saveBitmapToJpeg(resource, photoFile);
+            saveBitmapToJpeg(resource, photoFile)
         }
 
         override fun onLoadFailed(errorDrawable: Drawable?) {

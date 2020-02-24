@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ActionItem">
+        <item name="android:textSize">@dimen/bottom_sheet_text_size</item>
+        <item name="android:drawablePadding">@dimen/bottom_sheet_drawable_padding</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/bottom_sheet_normal_padding</item>
+    </style>
+
 </resources>

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/memosFragment">
 
     <fragment
         android:id="@+id/memosFragment"
+        tools:layout="@layout/memos_frag"
         android:name="com.test.memoapp.ui.memos.MemosFragment"
         android:label="MemosFragment" >
+
         <argument
-            android:name="memoId"
-            app:argType="string" />
+            android:name="forceUpdate"
+            android:defaultValue="false"
+            app:argType="boolean"></argument>
+
         <action
             android:id="@+id/action_memosFragment_to_addEditMemoFragment"
             app:destination="@id/addEditMemoFragment" />
@@ -20,10 +25,114 @@
     </fragment>
     <fragment
         android:id="@+id/addEditMemoFragment"
+        tools:layout="@layout/addmemo_frag"
         android:name="com.test.memoapp.ui.addeditmemo.AddEditMemoFragment"
-        android:label="AddEditMemoFragment" />
+        android:label="AddEditMemoFragment" >
+
+        <action
+            android:id="@+id/action_addEditMemoFragment_to_actionBottomSheetFragment"
+            app:destination="@id/actionBottomSheetFragment" />
+        <action
+            android:id="@+id/action_addEditMemoFragment_to_memosFragment"
+            app:destination="@id/memosFragment" />
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo" />
+
+    </fragment>
+
     <fragment
+        tools:layout="@layout/memodetail_frag"
         android:id="@+id/memoDetailFragment"
         android:name="com.test.memoapp.ui.memodetail.MemoDetailFragment"
-        android:label="MemoDetailFragment" />
+        android:label="MemoDetailFragment" >
+
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo" />
+
+        <action
+            android:id="@+id/action_memoDetailFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+        <action
+            android:id="@+id/action_memoDetailFragment_to_memosFragment"
+            app:destination="@id/memosFragment" />
+
+    </fragment>
+
+    <dialog
+        tools:layout="@layout/bottom_sheet"
+        android:id="@+id/actionBottomSheetFragment"
+        android:name="com.test.memoapp.ui.ActionBottomSheetFragment"
+        android:label="ActionBottomSheetFragment" >
+
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_customGalleryFragment"
+            app:destination="@id/customGalleryFragment" />
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo"
+            />
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_actionBottomSheetFragment_to_remoteUrlFragment"
+            app:destination="@id/remoteUrlFragment" />
+    </dialog>
+    <fragment
+        tools:layout="@layout/fragment_multi_gallery_ui"
+        android:id="@+id/customGalleryFragment"
+        android:name="com.test.memoapp.ui.gallery.CustomGalleryFragment"
+        android:label="CustomGalleryFragment" >
+
+        <action
+            android:id="@+id/action_customGalleryFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment"
+            app:popUpTo="@+id/addEditMemoFragment"
+            app:popUpToInclusive="true">
+        </action>
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_camera"
+        android:id="@+id/cameraFragment"
+        android:name="com.test.memoapp.ui.camera.CameraFragment"
+        android:label="CameraFragment" >
+
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo"
+            />
+
+        <action
+            app:popUpTo="@+id/addEditMemoFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_cameraFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+
+    </fragment>
+    <fragment
+        tools:layout="@layout/remote_url_frag"
+        android:id="@+id/remoteUrlFragment"
+        android:name="com.test.memoapp.ui.remoteurl.RemoteUrlFragment"
+        android:label="RemoteUrlFragment" >
+
+        <argument
+            android:name="memo"
+            app:argType="com.test.memoapp.data.Memo"
+            />
+
+        <action
+            app:popUpTo="@+id/addEditMemoFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_remoteUrlFragment_to_addEditMemoFragment"
+            app:destination="@id/addEditMemoFragment" />
+    </fragment>
 </navigation>

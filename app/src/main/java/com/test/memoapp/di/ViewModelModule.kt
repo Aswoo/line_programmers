@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 import com.test.memoapp.ui.addeditmemo.AddEditMemoViewModel
+import com.test.memoapp.ui.memodetail.MemoDetailViewModel
 import com.test.memoapp.ui.memos.MemosViewModel
 
 import dagger.Binds
@@ -37,7 +38,13 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MemosViewModel::class)
-    abstract fun bindRepoViewModel(memosViewModel: MemosViewModel): ViewModel
+    abstract fun bindMemosViewModel(memosViewModel: MemosViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MemoDetailViewModel::class)
+    abstract fun bindMemoDetailViewModel(memoDetailViewModel: MemoDetailViewModel): ViewModel
+
 
     @Binds
     abstract fun bindViewModelFactory(factory: MemoViewModelFactory): ViewModelProvider.Factory

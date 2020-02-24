@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/attach_image_camera"
+        style="@style/ActionItem"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/baseline_photo_camera_24"
+        android:drawableLeft="@drawable/baseline_photo_camera_24"
+        android:text="@string/attach_image_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attach_image_gallery"
+        style="@style/ActionItem"
+        android:drawableStart="@drawable/baseline_photo_black_24"
+        android:drawableLeft="@drawable/baseline_photo_black_24"
+        android:text="@string/attach_image_local"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attach_image_camera" />
+
+    <TextView
+        android:id="@+id/attach_image_url"
+        style="@style/ActionItem"
+        android:drawableStart="@drawable/baseline_save_alt_24"
+        android:drawableLeft="@drawable/baseline_save_alt_24"
+        android:text="@string/attach_iamge_url"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attach_image_gallery" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

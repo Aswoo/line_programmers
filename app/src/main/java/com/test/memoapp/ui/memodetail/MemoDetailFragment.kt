@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.test.memoapp.R
-import androidx.lifecycle.Observer
 import com.test.memoapp.EventObserver
+import com.test.memoapp.R
 import com.test.memoapp.databinding.MemodetailFragBinding
 import com.test.memoapp.di.Injectable
-import com.test.memoapp.ui.addeditmemo.AddEditMemoAdapter
 import com.test.memoapp.util.HorizentalRecyclerViewItemDecoration
-import kotlinx.android.synthetic.main.memodetail_frag.*
 import javax.inject.Inject
 
 class MemoDetailFragment : Fragment(), Injectable {

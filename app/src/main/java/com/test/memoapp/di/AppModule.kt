@@ -51,6 +51,8 @@ class AppModule {
 
 }
 
+
+@Suppress("unused")
 @Module
 abstract class ApplicationModuleBinds {
 

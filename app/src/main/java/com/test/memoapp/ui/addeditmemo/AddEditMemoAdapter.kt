@@ -19,14 +19,10 @@ package com.test.memoapp.ui.addeditmemo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.test.memoapp.data.Memo
 import com.test.memoapp.databinding.MemoImageItemBinding
-import com.test.memoapp.databinding.MemoItemBinding
-import com.test.memoapp.databinding.MemodetailItemBinding
 
 
 class AddEditMemoAdapter :
@@ -59,7 +55,7 @@ class AddEditMemoAdapter :
             binding.executePendingBindings()
             if(itemClick != null){
                 binding.igDeleteImage.setOnClickListener {
-                    itemClick?.onClick(it, position)
+                    itemClick.onClick(it, position)
                 }
             }
 

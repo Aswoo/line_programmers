@@ -1,14 +1,11 @@
 package com.test.memoapp.ui.memos
 
 import android.util.Log
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.test.memoapp.Event
-import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.data.source.MemosRepository
 import io.reactivex.android.schedulers.AndroidSchedulers

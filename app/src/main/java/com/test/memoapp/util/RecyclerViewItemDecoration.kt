@@ -14,7 +14,7 @@ class RecyclerViewItemDecoration constructor(context: Context?) :
 
     init {
 
-        val metrics = context!!.getResources().getDisplayMetrics()
+        val metrics = context!!.resources.displayMetrics
         mPadding = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             PADDING_IN_DIPS.toFloat(),
@@ -35,10 +35,10 @@ class RecyclerViewItemDecoration constructor(context: Context?) :
         val itemPosition = parent.getChildAdapterPosition(view)
 
         if (itemPosition == RecyclerView.NO_POSITION) {
-            return;
+            return
         }
 
-        outRect.bottom = mPadding;
+        outRect.bottom = mPadding
     }
 }
 

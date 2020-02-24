@@ -14,7 +14,7 @@ class HorizentalRecyclerViewItemDecoration constructor(context: Context?) :
 
     init {
 
-        val metrics = context!!.getResources().getDisplayMetrics()
+        val metrics = context!!.resources.displayMetrics
         mPadding = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             PADDING_IN_DIPS.toFloat(),
@@ -35,7 +35,7 @@ class HorizentalRecyclerViewItemDecoration constructor(context: Context?) :
         val itemPosition = parent.getChildAdapterPosition(view)
 
         if (itemPosition == RecyclerView.NO_POSITION) {
-            return;
+            return
         }
 
         outRect.left = mPadding/2

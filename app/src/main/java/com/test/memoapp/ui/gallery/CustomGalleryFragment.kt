@@ -93,7 +93,7 @@ class CustomGalleryFragment : Fragment() {
 
             val mutableList : MutableList<String> = mutableListOf()
 
-            memo.images?.forEach{
+            memo.images.forEach{
                 mutableList.add(it)
             }
             images.forEach {

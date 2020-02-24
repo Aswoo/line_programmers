@@ -18,6 +18,7 @@ package com.test.memoapp.di
 
 import android.app.Application
 import androidx.room.Room
+
 import com.test.memoapp.data.source.DefaultMemosRepository
 import com.test.memoapp.data.source.MemosRepository
 import com.test.memoapp.data.source.local.MemoDb
@@ -31,6 +32,7 @@ import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class,ApplicationModuleBinds::class])
 class AppModule {
+
 
     @Singleton
     @Provides

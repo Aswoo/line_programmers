@@ -29,13 +29,20 @@ import com.test.memoapp.databinding.MemoItemBinding
 import com.test.memoapp.databinding.MemodetailItemBinding
 
 
-class AddEditMemoAdapter(private val imageClickCallback: ((Int) -> Unit)?) :
+class AddEditMemoAdapter :
     ListAdapter<String, AddEditMemoAdapter.ViewHolder>(ImagePathDiffCallback()) {
+
+    interface ItemClick
+    {
+        fun onClick(view: View, position: Int)
+    }
+    var itemClick: ItemClick? = null
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
-        holder.bind(item,imageClickCallback,position)
+
+        holder.bind(item,itemClick)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,14 +53,16 @@ class AddEditMemoAdapter(private val imageClickCallback: ((Int) -> Unit)?) :
 
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: String,imageClickCallback : ((Int) -> Unit)?,position : Int) {
+        fun bind(item: String,itemClick : ItemClick?) {
 
             binding.url = item
             binding.executePendingBindings()
-
-            binding.igDeleteImage.setOnClickListener {
-                imageClickCallback?.invoke(position)
+            if(itemClick != null){
+                binding.igDeleteImage.setOnClickListener {
+                    itemClick?.onClick(it, position)
+                }
             }
+
         }
 
         companion object {

@@ -22,17 +22,14 @@ class MemoDetailViewModel @Inject constructor(private val repository: MemosRepos
     private val _memo = MutableLiveData<Memo>()
     val memo: LiveData<Memo> = _memo
 
-    private val _isDataAvailable = MutableLiveData<Boolean>()
-    val isDataAvailable: LiveData<Boolean> = _isDataAvailable
-
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _editTaskCommand = MutableLiveData<Event<Unit>>()
-    val editTaskCommand: LiveData<Event<Unit>> = _editTaskCommand
+    private val _editMemoCommand = MutableLiveData<Event<Unit>>()
+    val editMemoCommand: LiveData<Event<Unit>> = _editMemoCommand
 
-    private val _deleteTaskCommand = MutableLiveData<Event<Unit>>()
-    val deleteTaskCommand: LiveData<Event<Unit>> = _deleteTaskCommand
+    private val _deleteMemoCommand = MutableLiveData<Event<Unit>>()
+    val deleteMemoCommand: LiveData<Event<Unit>> = _deleteMemoCommand
 
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarMessage: LiveData<Event<Int>> = _snackbarText
@@ -44,25 +41,26 @@ class MemoDetailViewModel @Inject constructor(private val repository: MemosRepos
         get() = _memo.value!!.id
 
     fun deleteMemo() {
-        compositeDisposable.add(repository.deleteMemo(memoId).subscribeOn(Schedulers.io())
+        compositeDisposable.add(repository.deleteMemo(memoId)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 _snackbarText.value =
                     Event(R.string.menu_delete_memo)
+                _deleteMemoCommand.value = Event(Unit)
             })
     }
 
-    fun load(memoId: String?) {
+    fun load(memoId: String) {
 
-
-        if (_isDataAvailable.value == true || _dataLoading.value == true) {
+        if (_dataLoading.value == true) {
             return
         }
 
         // Show loading indicator
         _dataLoading.value = true
 
-        if (memoId != null) {
+        if (memoId != "") {
 
             compositeDisposable.add(
                 repository.getMemo(memoId).subscribeOn(Schedulers.io())
@@ -81,6 +79,10 @@ class MemoDetailViewModel @Inject constructor(private val repository: MemosRepos
         }
 
 
+    }
+
+    fun editMemo() {
+        _editMemoCommand.value = Event(Unit)
     }
 
     override fun onCleared() {

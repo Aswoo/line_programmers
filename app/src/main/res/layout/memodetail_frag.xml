@@ -42,12 +42,15 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_margin="@dimen/margin_8dp"
                     android:id="@+id/image_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     ></androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
+
+                    android:layout_margin="@dimen/margin_8dp"
                     android:id="@+id/add_memo_title"
                     android:background="@null"
                     android:layout_width="match_parent"
@@ -58,6 +61,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
+                    android:layout_margin="@dimen/margin_8dp"
                     android:id="@+id/add_memo_description"
                     android:background="@null"
                     android:layout_width="match_parent"

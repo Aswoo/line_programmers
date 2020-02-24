@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,16 +15,25 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.test.memoapp.EventObserver
 import com.test.memoapp.R
 import com.test.memoapp.data.Memo
 import com.test.memoapp.databinding.AddmemoFragBinding
 import com.test.memoapp.di.Injectable
+import com.test.memoapp.ui.memos.MemosFragmentDirections
+import com.test.memoapp.util.HorizentalRecyclerViewItemDecoration
+import com.test.memoapp.util.setupRefreshLayout
 import com.test.memoapp.util.setupSnackbar
 import kotlinx.android.synthetic.main.addmemo_frag.*
+import kotlinx.android.synthetic.main.addmemo_frag.add_memo_description
+import kotlinx.android.synthetic.main.addmemo_frag.add_memo_title
+import kotlinx.android.synthetic.main.memo_item.*
+import kotlinx.android.synthetic.main.memodetail_frag.*
+import kotlinx.android.synthetic.main.memos_frag.*
 import java.util.logging.Logger
 import javax.inject.Inject
 
-class AddEditMemoFragment : Fragment(),Injectable{
+class AddEditMemoFragment : Fragment(), Injectable {
 
     private lateinit var binding: AddmemoFragBinding
 
@@ -55,48 +65,64 @@ class AddEditMemoFragment : Fragment(),Injectable{
 
         initRecyclerView()
 
-        val rvAdapter = AddEditMemoAdapter{
-            viewModel.removeImagePath(it)
-        }
+        (activity as AppCompatActivity).supportActionBar?.show()
+
+        viewModel.onTempMemoLoad(args.memo)
+
+        val rvAdapter = AddEditMemoAdapter()
         this.adapter = rvAdapter
 
-        binding.memoImageList.adapter = rvAdapter
-
-        args?.run {
-
-            if (images != null) {
-                viewModel.addImagePath(images)
+        adapter.itemClick = object : AddEditMemoAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                viewModel.removeImagePath(position)
             }
-
         }
-        fab_save_memo.setOnClickListener {
+        binding.memoImageList.adapter = adapter
 
+    }
+
+    private fun setupFab() {
+        fab_save_memo.setOnClickListener {
             val title = add_memo_title.text.toString()
             val description = add_memo_description.text.toString()
-            viewModel.saveMemo(Memo(title,description))
+            viewModel.saveMemo(Memo(title, description))
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupSnackbar()
-        Log.e("MEMOID",args.memoId.toString())
-        viewModel.start(args.memoId)
+        setupNavigation()
+        setupFab()
+        viewModel.start(args.memo.id)
+        this.setupRefreshLayout(binding.refreshLayout)
 
-    }
-
-    private fun setupSnackbar() {
-        view?.setupSnackbar(this, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.menu_clear -> {
                 //viewModel.clearCompletedTasks()
+                viewModel.clearMemo()
                 true
             }
             R.id.menu_attach -> {
-                val action = AddEditMemoFragmentDirections.actionAddEditMemoFragmentToActionBottomSheetFragment(args.memoId)
+
+                val title = add_memo_title.text.toString()
+                val description = add_memo_description.text.toString()
+                val images = viewModel.imagePathList.value!!.toList()
+
+                var memo: Memo
+
+                if (viewModel.isNewMemo) {
+                    memo = Memo(title, description, images)
+                } else {
+                    memo = Memo(title, description, images, args.memo.id)
+                }
+                val action =
+                    AddEditMemoFragmentDirections.actionAddEditMemoFragmentToActionBottomSheetFragment(
+                        memo
+                    )
                 findNavController().navigate(action)
                 true
             }
@@ -107,19 +133,30 @@ class AddEditMemoFragment : Fragment(),Injectable{
         inflater.inflate(R.menu.addeditmemo_fragment_menu, menu)
     }
 
-    companion object {
-        private const val REQUEST_PICK_PHOTO = 1
-    }
     private fun initRecyclerView() {
 
         binding.viewmodel = viewModel
-        binding.memoImageList.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL ,false)
+        binding.memoImageList.addItemDecoration(HorizentalRecyclerViewItemDecoration(context))
+        binding.memoImageList.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         viewModel.imagePathList.observe(viewLifecycleOwner, Observer { result ->
 
             adapter.submitList(result)
+
         })
     }
 
+    private fun setupNavigation() {
+        viewModel.memoUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
+            val action =
+                AddEditMemoFragmentDirections.actionAddEditMemoFragmentToMemosFragment(true)
+            findNavController().navigate(action)
+        })
+    }
+
+    private fun setupSnackbar() {
+        view?.setupSnackbar(this, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
+    }
 
 }

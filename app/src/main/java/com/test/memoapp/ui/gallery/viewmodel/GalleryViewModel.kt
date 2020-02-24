@@ -72,12 +72,6 @@ class GalleryViewModel : ViewModel() {
                 rowsToLoad = rowsPerLoad
             }
 
-
-
-
-
-
-
             for (i in startingRow until rowsToLoad) {
                 cursor.moveToPosition(i)
                 val dataColumnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA) //get column index

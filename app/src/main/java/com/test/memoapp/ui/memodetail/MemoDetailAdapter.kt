@@ -25,10 +25,7 @@ import com.test.memoapp.data.Memo
 import com.test.memoapp.databinding.MemoItemBinding
 import com.test.memoapp.databinding.MemodetailItemBinding
 
-/**
- * Adapter for the memo list. Has a reference to the [MemosViewModel] to send actions back to it.
- */
-class MemoDetailAdapter() :
+class MemoDetailAdapter :
     ListAdapter<String, MemoDetailAdapter.ViewHolder>(MemoDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

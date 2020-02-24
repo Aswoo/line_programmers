@@ -21,7 +21,7 @@ import androidx.room.RoomDatabase
 import com.test.memoapp.data.Memo
 
 /**
- * The Room Database that contains the Task table.
+ * The Room Database that contains the Memo table.
  *
  * Note that exportSchema should be true in production databases.
  */

@@ -4,15 +4,23 @@
     <string name="description_hint">본문을 입력하세요</string>
     <string name="empty_memo_message">모든 내용을 채워주세요</string>
     <string name="create_memo_message">메모를 저장을 완료했습니다</string>
+    <string name="update_memo_message">메모 업데이트를 완료했습니다</string>
     <string name="error_memo_message">메모 저장에 실패했습니다</string>
 
     <string name="attach_image_local">로컬 저장소에서 불러오기</string>
     <string name="attach_image_camera">카매라로 새로 촬영하기</string>
     <string name="attach_iamge_url">외부 이미지 주소(URL)로 불러오기</string>
 
+    <string name="image_url_hint">외부 이미지(URL)을 입력해주세요.</string>
+    <string name="image_url_load_error">외부 이미지(URL)를 불러오는데 실패했습니다</string>
+    <string name="image_url_save_error">외부 이미지(URL)를 저장하는데 실패했습니다</string>
+
     <string name="menu_delete_memo">삭제</string>
     <string name="menu_attach_image">첨부</string>
 
     <string name="txt_gallery">갤러리</string>
     <string name="txt_done">완료</string>
+
+    <string name="capture_button_alt">촬영</string>
+    <string name="switch_camera_button_alt">카메라 방향 교체</string>
 </resources>

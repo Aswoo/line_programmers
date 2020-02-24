@@ -1,7 +1,6 @@
 package com.test.memoapp.data.source
 
 import com.test.memoapp.data.Memo
-import com.test.memoapp.data.Result
 import com.test.memoapp.data.source.local.MemosDao
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,11 +8,11 @@ import javax.inject.Inject
 
 class DefaultMemosRepository @Inject constructor(private val memosDao: MemosDao) : MemosRepository {
 
-    override fun getMemos(forceUpdate: Boolean): Single<List<Memo>> {
-        return memosDao.getTasks()
+    override fun getMemos(): Single<List<Memo>> {
+        return memosDao.getMemos()
     }
 
-    override fun getMemo(memoId: String, forceUpdate: Boolean): Single<Memo> {
+    override fun getMemo(memoId: String): Single<Memo> {
         return memosDao.getMemoById(memoId)
     }
 
@@ -26,7 +25,7 @@ class DefaultMemosRepository @Inject constructor(private val memosDao: MemosDao)
     }
 
     override fun deleteMemo(memoId: String) : Completable{
-        return memosDao.deleteTaskById(memoId)
+        return memosDao.deleteMemoById(memoId)
     }
 
 }

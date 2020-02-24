@@ -1,4 +1,4 @@
-package com.test.memoapp.util
+package com.test.memoapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -39,14 +39,28 @@ class ActionBottomSheetFragment : BottomSheetDialogFragment() {
 
     fun navigateWithArg(selected : String) {
 
-
         when(selected){
-            "camera" -> ""
-            "gallery" -> {
-                val action = ActionBottomSheetFragmentDirections.actionActionBottomSheetFragmentToCustomGalleryFragment(args.memoId)
-                findNavController().navigate(R.id.action_actionBottomSheetFragment_to_customGalleryFragment)
+            "camera" -> {
+                val action =
+                    ActionBottomSheetFragmentDirections.actionActionBottomSheetFragmentToCameraFragment(
+                        args.memo
+                    )
+                findNavController().navigate(action)
             }
-            "url" -> ""
+            "gallery" -> {
+                val action =
+                    ActionBottomSheetFragmentDirections.actionActionBottomSheetFragmentToCustomGalleryFragment(
+                        args.memo
+                    )
+                findNavController().navigate(action)
+            }
+            "url" -> {
+                val action =
+                    ActionBottomSheetFragmentDirections.actionActionBottomSheetFragmentToRemoteUrlFragment(
+                        args.memo
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 }

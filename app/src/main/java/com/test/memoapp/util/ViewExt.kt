@@ -20,11 +20,29 @@ package com.test.memoapp.util
  */
 
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.test.memoapp.Event
+import com.test.memoapp.R
+import com.test.memoapp.ScrollChildSwipeRefreshLayout
+
+
+/** Combination of all flags required to put activity into immersive mode */
+const val FLAGS_FULLSCREEN =
+    View.SYSTEM_UI_FLAG_LOW_PROFILE or
+            View.SYSTEM_UI_FLAG_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+/** Milliseconds used for UI animations */
+const val ANIMATION_FAST_MILLIS = 50L
+const val ANIMATION_SLOW_MILLIS = 100L
 
 /**
  * Transforms static java function Snackbar.make() to an extension function on View.
@@ -52,10 +70,25 @@ fun View.setupSnackbar(
     snackbarEvent: LiveData<Event<Int>>,
     timeLength: Int
 ) {
-
     snackbarEvent.observe(lifecycleOwner, Observer { event ->
         event.getContentIfNotHandled()?.let {
             showSnackbar(context.getString(it), timeLength)
         }
     })
+}
+
+
+fun Fragment.setupRefreshLayout(
+    refreshLayout: ScrollChildSwipeRefreshLayout,
+    scrollUpChild: View? = null
+) {
+    refreshLayout.setColorSchemeColors(
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimary),
+        ContextCompat.getColor(requireActivity(), R.color.colorAccent),
+        ContextCompat.getColor(requireActivity(), R.color.colorPrimaryDark)
+    )
+    // Set the scrolling view in the custom SwipeRefreshLayout.
+    scrollUpChild?.let {
+        refreshLayout.scrollUpChild = it
+    }
 }

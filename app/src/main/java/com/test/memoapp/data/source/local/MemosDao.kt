@@ -32,12 +32,12 @@ import io.reactivex.Single
 interface MemosDao {
 
     /**
-     * Select all memos from the tasks table.
+     * Select all memos from the memos table.
      *
      * @return all memos.
      */
     @Query("SELECT * FROM Memos")
-    fun getTasks(): Single<List<Memo>>
+    fun getMemos(): Single<List<Memo>>
 
     /**
      * Select a memo by id.
@@ -49,32 +49,32 @@ interface MemosDao {
     fun getMemoById(memoId: String): Single<Memo>
 
     /**
-     * Insert a memo in the database. If the task already exists, replace it.
+     * Insert a memo in the database. If the memo already exists, replace it.
      *
-     * @param task the memo to be inserted.
+     * @param memo the memo to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMemo(memo: Memo) : Completable
 
     /**
-     * Update a task.
+     * Update a memo.
      *
-     * @param memo task to be updated
-     * @return the number of tasks updated. This should always be 1.
+     * @param memo memo to be updated
+     * @return the number of memos updated. This should always be 1.
      */
     @Update
     fun updateMemo(memo: Memo): Completable
 
     /**
-     * Delete a task by id.
+     * Delete a memo by id.
      *
-     * @return the number of tasks deleted. This should always be 1.
+     * @return the number of memos deleted. This should always be 1.
      */
     @Query("DELETE FROM Memos WHERE entryid = :memoId")
-    fun deleteTaskById(memoId: String): Completable
+    fun deleteMemoById(memoId: String): Completable
 
     /**
-     * Delete all tasks.
+     * Delete all memos.
      */
     @Query("DELETE FROM Memos")
     fun deleteMemos()

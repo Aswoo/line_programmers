@@ -17,7 +17,6 @@
 package com.test.memoapp.data.source
 
 import com.test.memoapp.data.Memo
-import com.test.memoapp.data.Result
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -26,9 +25,9 @@ import io.reactivex.Single
  */
 interface MemosRepository {
 
-     fun getMemos(forceUpdate: Boolean = false): Single<List<Memo>>
+     fun getMemos(): Single<List<Memo>>
 
-     fun getMemo(taskId: String, forceUpdate: Boolean = false): Single<Memo>
+     fun getMemo(memo: String): Single<Memo>
 
      fun saveMemo(memo: Memo) : Completable
 

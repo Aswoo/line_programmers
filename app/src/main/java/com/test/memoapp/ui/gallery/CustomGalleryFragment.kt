@@ -5,10 +5,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -17,13 +15,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.memoapp.R
-import com.test.memoapp.di.Injectable
+import com.test.memoapp.data.Memo
 import com.test.memoapp.ui.gallery.adapter.GalleryPicturesAdapter
 import com.test.memoapp.ui.gallery.model.GalleryPicture
-import com.test.memoapp.ui.gallery.model.GalleryPictures
 import com.test.memoapp.ui.gallery.viewmodel.GalleryViewModel
-import kotlinx.android.synthetic.main.activity_multi_gallery_ui.*
-import kotlinx.android.synthetic.main.memodetail_item.*
+import kotlinx.android.synthetic.main.fragment_multi_gallery_ui.*
 import kotlinx.android.synthetic.main.toolbar.*
 import mobin.customgallery.multipicker.ui.gallery.adapter.SpaceItemDecoration
 
@@ -43,7 +39,7 @@ class CustomGalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_multi_gallery_ui,container,false)
+        return inflater.inflate(R.layout.fragment_multi_gallery_ui,container,false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -65,6 +61,9 @@ class CustomGalleryFragment : Fragment() {
     }
 
     private fun init() {
+
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
         galleryViewModel = ViewModelProviders.of(this)[GalleryViewModel::class.java]
         updateToolbar(0)
         val layoutManager = GridLayoutManager(context, 3)
@@ -88,14 +87,22 @@ class CustomGalleryFragment : Fragment() {
         })
 
         tvDone.setOnClickListener {
-            //super.onBackPressed()
 
-            val images = adapter.getSelectedItems().toTypedArray<GalleryPicture>()
+            val images = adapter.getSelectedItems()
+            val memo : Memo = args.memo
 
-            val action = CustomGalleryFragmentDirections.actionCustomGalleryFragmentToAddEditMemoFragment(images,args.memoId)
+            val mutableList : MutableList<String> = mutableListOf()
+
+            memo.images?.forEach{
+                mutableList.add(it)
+            }
+            images.forEach {
+                mutableList.add(it)
+            }
+            memo.images = mutableList
+            val action = CustomGalleryFragmentDirections.actionCustomGalleryFragmentToAddEditMemoFragment(memo)
 
             findNavController().navigate(action)
-
         }
 
         ivBack.setOnClickListener {
@@ -133,29 +140,28 @@ class CustomGalleryFragment : Fragment() {
         }
         tvTitle.text = data
     }
+        /*
+        override fun onBackPressed() {
+            if (adapter.removedSelection()) {
+                updateToolbar(0)
+            } else {
+                super.onBackPressed()
+            }
 
-    /*
-    override fun onBackPressed() {
-        if (adapter.removedSelection()) {
-            updateToolbar(0)
-        } else {
-            super.onBackPressed()
+
         }
 
+        private fun showToast(s: String) = Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
 
-    }
-
-    private fun showToast(s: String) = Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            init()
-        else {
-            showToast("Permission Required to Fetch Gallery.")
-            super.onBackPressed()
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                init()
+            else {
+                showToast("Permission Required to Fetch Gallery.")
+                super.onBackPressed()
+            }
         }
-    }
 
-     */
+         */
 
 }

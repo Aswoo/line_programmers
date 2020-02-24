@@ -20,24 +20,22 @@ import androidx.room.TypeConverter
 
 
 object MemoTypeConverters {
+
+
     @TypeConverter
     @JvmStatic
-    fun stringToIntList(data: String?): List<String>? {
-        return data?.let {
-            it.split(",").map {
-                try {
-                    it.toString()
-                } catch (ex: NumberFormatException) {
-                    //Timber.e(ex, "Cannot convert $it to number")
-                    null
-                }
-            }
-        }?.filterNotNull()
+    fun fromString(stringListString: String): List<String> {
+        return if(stringListString.isBlank()){
+            emptyList()
+        }else{
+            stringListString.split(",").map { it }
+        }
     }
 
     @TypeConverter
     @JvmStatic
-    fun intListToString(ints: List<String>?): String? {
-        return ints?.joinToString(",")
+    fun toString(stringList: List<String>): String {
+        val string = stringList.joinToString(separator = ",")
+        return string.trim()
     }
 }

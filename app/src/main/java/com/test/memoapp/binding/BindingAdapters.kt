@@ -33,9 +33,6 @@ import com.test.memoapp.ui.memos.MemosAdapter
  */
 object BindingAdapters {
 
-
-
-
     @JvmStatic
     @BindingAdapter("visibleGone")
     fun showHide(view: View, show: Boolean) {
@@ -45,16 +42,17 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("bind_url")
-    fun bindGlideFile(view: ImageView, url: String) {
+    fun bindGlideFile(view: ImageView, url: String?) {
 
         val myOptions: RequestOptions = RequestOptions()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
 
+
         Glide.with(view.context)
             .load(url)
-            .placeholder(R.drawable.baseline_attachment_24)
             .apply(myOptions)
+            .placeholder(R.drawable.placeholder)
             .into(view)
     }
 }

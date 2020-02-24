@@ -19,6 +19,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/thumbnail"
             app:bind_url="@{memo.images[0]}"
+            android:scaleType="fitXY"
             android:layout_width="100dp"
             android:layout_height="100dp"></ImageView>
 

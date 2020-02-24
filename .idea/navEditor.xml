@@ -24,7 +24,17 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_actionBottomSheetFragment_to_cameraFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_actionBottomSheetFragment_to_customGalleryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_actionBottomSheetFragment_to_remoteUrlFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -46,6 +56,32 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_addEditMemoFragment_to_actionBottomSheetFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_addEditMemoFragment_to_memosFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="cameraFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="863" />
+                            <option name="y" value="106" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_cameraFragment_to_addEditMemoFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -92,6 +128,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_memoDetailFragment_to_memosFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -114,6 +155,27 @@
                               </value>
                             </entry>
                             <entry key="action_memosFragment_to_memoDetailFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="remoteUrlFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="847" />
+                            <option name="y" value="485" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_remoteUrlFragment_to_addEditMemoFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

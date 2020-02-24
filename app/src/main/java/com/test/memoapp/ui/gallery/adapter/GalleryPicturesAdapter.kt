@@ -112,7 +112,7 @@ class GalleryPicturesAdapter(private val list: List<GalleryPicture>) : RecyclerV
 
 
     fun getSelectedItems() = selectedIndexList.map {
-        list[it]
+        list[it].path
     }
 
 

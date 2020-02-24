@@ -32,4 +32,7 @@ task clean(type: Delete) {
 ext {
     daggerVersion = '2.23.2'
     roomVersion = '2.2.3'
+    rxVersion = '2.2.0'
+    glideVersion = '4.10.0'
+    cameraxVersion = "1.0.0-alpha06"
 }

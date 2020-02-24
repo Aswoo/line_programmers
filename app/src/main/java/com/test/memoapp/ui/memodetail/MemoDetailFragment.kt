@@ -10,19 +10,21 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.memoapp.R
 import androidx.lifecycle.Observer
+import com.test.memoapp.EventObserver
 import com.test.memoapp.databinding.MemodetailFragBinding
 import com.test.memoapp.di.Injectable
 import com.test.memoapp.ui.addeditmemo.AddEditMemoAdapter
+import com.test.memoapp.util.HorizentalRecyclerViewItemDecoration
+import kotlinx.android.synthetic.main.memodetail_frag.*
 import javax.inject.Inject
 
-class MemoDetailFragment : Fragment(),Injectable{
+class MemoDetailFragment : Fragment(), Injectable {
 
     private lateinit var binding: MemodetailFragBinding
 
     private val args: MemoDetailFragmentArgs by navArgs()
 
     private lateinit var adapter: MemoDetailAdapter
-
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -39,9 +41,10 @@ class MemoDetailFragment : Fragment(),Injectable{
             viewmodel = viewModel
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
-        viewModel.load(args.memoId)
+        viewModel.load(args.memo.id)
         setupFab()
         setHasOptionsMenu(true)
+        setupNavigation()
         return view
     }
 
@@ -59,22 +62,19 @@ class MemoDetailFragment : Fragment(),Injectable{
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_delete -> {
-                //viewModel.deleteTask()
+                viewModel.deleteMemo()
                 true
             }
             else -> false
         }
     }
-    private fun setupFab() {
-        activity?.findViewById<View>(R.id.fab_add_memo)?.setOnClickListener {
 
-            val action = MemoDetailFragmentDirections
-                .actionMemoDetailFragmentToAddEditMemoFragment(
-                    null,
-                    memoId = args.memoId)
-            findNavController().navigate(action)
+    private fun setupFab() {
+        binding.fabEditMemo.setOnClickListener {
+            viewModel.editMemo()
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.memodetail_fragment_menu, menu)
@@ -83,15 +83,27 @@ class MemoDetailFragment : Fragment(),Injectable{
     private fun initRecyclerView() {
 
         binding.viewmodel = viewModel
-        binding.imageList.layoutManager = LinearLayoutManager(context,
-            LinearLayoutManager.HORIZONTAL ,false)
+        binding.imageList.addItemDecoration(HorizentalRecyclerViewItemDecoration(context))
+        binding.imageList.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL, false
+        )
 
         viewModel.imagePathList.observe(viewLifecycleOwner, Observer { result ->
-
             adapter.submitList(result)
         })
-
-
+    }
+    private fun setupNavigation() {
+        viewModel.deleteMemoCommand.observe(viewLifecycleOwner, EventObserver {
+            val action = MemoDetailFragmentDirections
+                .actionMemoDetailFragmentToMemosFragment(true)
+            findNavController().navigate(action)
+        })
+        viewModel.editMemoCommand.observe(viewLifecycleOwner, EventObserver {
+            val action = MemoDetailFragmentDirections
+                .actionMemoDetailFragmentToAddEditMemoFragment(viewModel.memo.value!!)
+            findNavController().navigate(action)
+        })
     }
 
 }

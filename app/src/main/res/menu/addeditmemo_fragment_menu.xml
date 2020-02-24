@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_attach"
-        android:title="@string/attach_image_local"
+        android:title="@string/menu_attach_image"
         android:icon="@drawable/baseline_attachment_24"
         app:showAsAction="always" />
     <item
